@@ -1,0 +1,80 @@
+" Encoding
+set encoding=utf-8
+
+"" Vim-plug
+call plug#begin('~/.vim/plugged')
+
+" Remember to use single quotes
+
+" essentials
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'}
+" themes
+Plug 'morhetz/gruvbox'
+" Status bar on bottom
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+call plug#end() 
+
+" Show line numbers 
+set number      "linenumber
+set ruler
+
+" Basic settings
+set bs=2        "backspace should work as we expect
+set clipboard=unnamed
+set laststatus=2
+set cursorline
+
+" Color theme
+syntax on
+filetype plugin on
+
+" Tab settings
+set autoindent
+set expandtab
+set softtabstop=4
+set shiftwidth=4    "tab size = 4
+set shiftround      "when shifting non-aligned set of lines, align them to next tabstop
+
+" Searching
+set hlsearch    "hightlight search result
+set incsearch   "show first match when start typing
+set ignorecase  "ignore case-sensitive
+set smartcase   "use case-sensitive if I use uppercase
+
+" Hotkey
+map <C-t> :NERDTreeToggle<cr>
+noremap <A-up> :m -2 <cr>
+noremap <A-down> :m +1 <cr>
+
+" Config theme
+set t_Co=256
+set background=dark
+set guifont=Consolas:h13
+if (has("termguicolors"))
+    set termguicolors
+endif
+let base16colorspace=256 " Access colors in 256
+
+" Specific theme
+let g:gruvbox_italic=1
+colorscheme gruvbox 
+let g:gruvbox_constrast_dark="hard"
+
+" Compiler
+"" C/C++
+function! CPPSET()
+    set nowrap
+    nnoremap <buffer> <F9> :w<cr>:!g++ -Wall -Wextra -O2 -std=c++11 % -o %< -I ./<cr>
+endfunction
+
+"" LaTeX
+function! TeXSET()
+    set nowrap
+    nnoremap <buffer> <F9> :w<cr>:!latex -interaction=nonstopmode % ./<cr>
+    nnoremap <buffer> <F8> :w<cr>:!pdflatex -synctex=1 -interaction=nonstopmode % ./<cr>
+endfunction
+
+autocmd FileType cpp call CPPSET()
+autocmd FileType tex call TeXSET()

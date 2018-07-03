@@ -1,0 +1,5 @@
+# When install vim-plug:
+## For Windows:
+    plug.vim must be in ~/vimfiles/autoload
+## For Linux (git bash, terminal, etc):
+    plug.vim must be in ~/.vim/autoload
