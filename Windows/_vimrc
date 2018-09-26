@@ -1,20 +1,27 @@
-" Encoding
-set encoding=utf-8
-
 "" Vim-plug
 call plug#begin('~/.vim/plugged')
 
 " Remember to use single quotes
 
 " essentials
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'}
+"Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'}
 " themes
 Plug 'morhetz/gruvbox'
 " Status bar on bottom
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'bling/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
 
 call plug#end() 
+
+"""""" Plugin Configuration
+"" Specific theme
+let g:gruvbox_italic=1
+colorscheme gruvbox 
+let g:gruvbox_constrast_dark="hard"
+
+"""""" General Configuration
+" Encoding
+set encoding=utf-8
 
 " Show line numbers 
 set number      "linenumber
@@ -22,9 +29,9 @@ set ruler
 
 " Basic settings
 set bs=2        "backspace should work as we expect
-set clipboard=unnamed
-set laststatus=2
-set cursorline
+set clipboard=unnamed "Clipboard
+set laststatus=2 "Always display statusline
+set cursorline "Highlight current line
 
 " Color theme
 syntax on
@@ -33,8 +40,8 @@ filetype plugin on
 " Tab settings
 set autoindent
 set expandtab
-set softtabstop=4
-set shiftwidth=4    "tab size = 4
+set softtabstop=2
+set shiftwidth=2    "tab size = 2
 set shiftround      "when shifting non-aligned set of lines, align them to next tabstop
 
 " Searching
@@ -44,23 +51,34 @@ set ignorecase  "ignore case-sensitive
 set smartcase   "use case-sensitive if I use uppercase
 
 " Hotkey
-map <C-t> :NERDTreeToggle<cr>
-noremap <A-up> :m -2 <cr>
-noremap <A-down> :m +1 <cr>
+map <C-t> :NERDTreeToggle <cr>
+noremap <A-k> :m -2 <cr>
+noremap <A-j> :m +1 <cr>
+let mapleader= ","
+ map <leader>h :wincmd h<CR>
+ map <leader>j :wincmd j<CR>
+ map <leader>k :wincmd k<CR>
+ map <leader>l :wincmd l<CR>
 
 " Config theme
 set t_Co=256
 set background=dark
-set guifont=Consolas:h13
+set guifont=Consolas:h12
 if (has("termguicolors"))
     set termguicolors
 endif
 let base16colorspace=256 " Access colors in 256
 
-" Specific theme
-let g:gruvbox_italic=1
-colorscheme gruvbox 
-let g:gruvbox_constrast_dark="hard"
+" Turn on elite
+let g:elite_mode=1
+
+" Disable arrow movement, resize splits instead
+if get(g:, 'elite_mode')
+    nnoremap <Up>    :resize +2<CR>
+    nnoremap <Down>  :resize -2<CR>
+    nnoremap <Left>  :vertical resize -2<CR>
+    nnoremap <Right> :vertical resize +2<CR>
+endif
 
 " Compiler
 "" C/C++
@@ -78,3 +96,4 @@ endfunction
 
 autocmd FileType cpp call CPPSET()
 autocmd FileType tex call TeXSET()
+autocmd FileType gitcommit set tw=60
